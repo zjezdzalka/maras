@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "bun run ./src/index.ts",
-    "schemas": "bunx drizzle-kit generate --dialect sqlite --schema ./src/utils/schemas.ts"
+    "schemas": "bunx drizzle-kit generate --dialect sqlite --schema ./src/utils/schemas.ts",
+    "migrate": "bun run ./src/utils/migrate.ts",
+    "seed": "bun run ./src/utils/seed.ts"
   },
   "type": "module",
   "author": "kraton",
@@ -19,8 +21,8 @@
     "typescript": "^5.5.4"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.24.1",
-    "@types/bun": "latest"
+    "@types/bun": "^1.1.6",
+    "drizzle-kit": "^0.24.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
