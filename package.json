@@ -1,0 +1,28 @@
+{
+  "name": "marek",
+  "version": "1.0.0",
+  "description": "discord bot for osu",
+  "main": "index.js",
+  "scripts": {
+    "dev": "bun run ./src/index.ts",
+    "schemas": "bunx drizzle-kit generate --dialect sqlite --schema ./src/utils/schemas.ts"
+  },
+  "type": "module",
+  "author": "kraton",
+  "license": "ISC",
+  "dependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "better-sqlite3": "^11.2.1",
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.33.0",
+    "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.24.1",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
