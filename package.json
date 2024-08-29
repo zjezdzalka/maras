@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "bun run ./src/index.ts",
-    "schemas": "bunx drizzle-kit generate --dialect sqlite --schema ./src/utils/schemas.ts",
+    "schemas": "bunx drizzle-kit generate",
     "migrate": "bun run ./src/utils/migrate.ts",
-    "seed": "bun run ./src/utils/seed.ts"
+    "seed": "bun run ./src/utils/seed.ts",
+    "full": "rm -rf ./sqlite.db && bun run schemas && bun run migrate && bun run seed"
   },
   "type": "module",
   "author": "kraton",

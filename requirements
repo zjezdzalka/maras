@@ -1,0 +1,4 @@
+/add (id:number) (pid1:number) (pid2:number) (time:number) Dodaje mecz o podanych wartościach
+/list (future:bool) Wypisuje wszystkie mecze i wyniki jesli się odbyły w przypadku false, a wpp wypisuje w przyszłości wszystkie mecze które dopiero się odbęda
+/edit (id:number) (score:string) Aktualizuje wartości meczu
+/delete (id:number) Usuwa z .txt mecz o ID [id]

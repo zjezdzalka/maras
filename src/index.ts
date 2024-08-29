@@ -12,10 +12,11 @@ const commands = await loadCommands()
 try {
   console.log("Started refreshing apps slash (/) commands.");
 
+  console.log(commands)
 
   await rest.put(Routes.applicationCommands(config.client_id), {
-    body: commands.map(e => { return { name: e.name, description: e.description } })
-  });
+    body: commands.map(e => { return e.body })
+  }).catch((err) => console.log(err));
 
   console.log(`Successfully reloaded ${commands.length} application slash (/) commands.`);
 } catch (err) {
@@ -31,8 +32,8 @@ client.on("ready", () => {
 client.on("interactionCreate", async (interact) => {
   if (!interact.isChatInputCommand()) return;
 
-  if (commands.map(a => a.name).includes(interact.commandName)) {
-    commands.find((e) => e.name == interact.commandName)?.action(interact)
+  if (commands.map(a => a.body.name).includes(interact.commandName)) {
+    commands.find((e) => e.body.name == interact.commandName)?.action(interact)
   }
 });
 
