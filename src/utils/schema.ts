@@ -6,7 +6,6 @@ export const matches = sqliteTable("matches", {
     playertwo_id: integer("playertwo_id").notNull().references(() => players.id),
     id: integer("id").primaryKey({ autoIncrement: true }),
 })
-console.log(matches)
 
 export const players = sqliteTable("players", {
     osu_id: integer("osu_id").notNull(),
