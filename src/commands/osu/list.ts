@@ -119,7 +119,7 @@ export default new Command("list", "Lists matches", ApplicationCommandOptionType
     try {
         const collector = response.createMessageComponentCollector({ 
             componentType: ComponentType.StringSelect,
-            time: 15_000 ,
+            time: 30_000 ,
             filter: (i) => i.user.id === interaction.user.id && i.customId === interaction.id,
         });
 
@@ -182,6 +182,11 @@ export default new Command("list", "Lists matches", ApplicationCommandOptionType
             }
             catch(e) {console.log(e)}
         });
+
+        setTimeout(() => {
+            collector.stop();
+            interaction.editReply({ embeds: [embed], components: [] });
+        }, 30_000);
     } 
     catch (e) {
         console.log(e);
