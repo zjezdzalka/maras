@@ -70,7 +70,7 @@ export default new Command("list", "Lists matches", ApplicationCommandOptionType
     let fields = await getResultQuery("");
     
     const select = new StringSelectMenuBuilder()
-    .setCustomId('select')
+    .setCustomId(interaction.id)
     .setPlaceholder('Select stage')
     .addOptions([
         new StringSelectMenuOptionBuilder()
@@ -114,13 +114,14 @@ export default new Command("list", "Lists matches", ApplicationCommandOptionType
     const response = await interaction.reply({ 
         embeds: [embed] ,
         components: [buttons],
-        ephemeral: true
     })
 
     try {
         const collector = response.createMessageComponentCollector({ 
             componentType: ComponentType.StringSelect,
-            time: 60_000 });
+            time: 15_000 ,
+            filter: (i) => i.user.id === interaction.user.id && i.customId === interaction.id,
+        });
 
         collector.on('collect', async (input) => {
             try{
@@ -184,7 +185,6 @@ export default new Command("list", "Lists matches", ApplicationCommandOptionType
     } 
     catch (e) {
         console.log(e);
-        
         await interaction.editReply({ embeds: [embed], components: [] });
     }
 
