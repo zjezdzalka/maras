@@ -13,5 +13,6 @@ export const players = sqliteTable("players", {
     osu_id: integer("osu_id").notNull(),
     name: text("name").notNull(),
     discord_tag: text("tag").notNull(),
+    discord_id: text("dsc_tag").notNull(),
     id: integer("id").primaryKey(),
 })

@@ -9,17 +9,20 @@ await db.insert(schema.players).values([
     {
         osu_id: 172437,
         name: "Dracula",
-        discord_tag: "alucards_dad"
+        discord_tag: "alucards_dad",
+        discord_id: "441861092529143808"
     },
     {
         osu_id: 696969,
         name: "Pig",
-        discord_tag: "missing_jigsaw"
+        discord_tag: "missing_jigsaw",
+        discord_id: "1277262687235080295"
     },
     {
         osu_id: 161616,
         name: "-null-",
-        discord_tag: "i_hate_atlas"
+        discord_tag: "i_hate_atlas",
+        discord_id: "1165284519457341505"
     },
 ])
 

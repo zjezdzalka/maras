@@ -16,6 +16,7 @@
   "dependencies": {
     "@types/better-sqlite3": "^7.6.11",
     "better-sqlite3": "^11.2.1",
+    "cron": "^3.2.1",
     "discord.js": "^14.15.3",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.33.0",
