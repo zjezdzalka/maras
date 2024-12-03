@@ -8,9 +8,12 @@ export default new Command("delete-match", "Deletes matches", ApplicationCommand
     new Option("del", "Czy usunąć wszystkie mecze?", true, ApplicationCommandOptionType.Boolean),
     new Option("del_num", "Który mecz usunąć?", false, ApplicationCommandOptionType.String)
 ], async (interaction: ChatInputCommandInteraction<CacheType>) => {
+    
     const delete_bool: boolean = interaction.options.data.find((e) => e.name === "del")?.value as boolean ?? false;
     const delete_num: number = parseInt(interaction.options.data.find((e) => e.name == "del_num")?.value!?.toString());
+    
     await interaction.deferReply();
+    
     if(delete_bool == true){
         const query = sql`DELETE FROM matches;`;
         const query2 = sql`DELETE FROM SQLITE_SEQUENCE WHERE name='matches';`;

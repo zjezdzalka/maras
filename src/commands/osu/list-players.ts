@@ -14,31 +14,27 @@ export default new Command("list-players", "Lists players", ApplicationCommandOp
 
     console.log(matchQuery);
 
-    // Map players to embed fields
     const fields: APIEmbedField[] = matchQuery.map((player) => {
         return {
             name: `${player.id}, ${player.name}`,
             value: `osu: ${player.osu_id}, discord: <@${player.dsc_tag}>`,
-            inline: false, // Optional: Ensures fields are displayed in separate rows
+            inline: false,
         };
     });
 
-    // Handle empty result set
     if (fields.length === 0) {
-    fields.push({
-        name: "Na ten moment nie ma graczy.",
-        value: "wee woo wee woo",
-    });
+        fields.push({
+            name: "Na ten moment nie ma graczy.",
+            value: "wee woo wee woo",
+        });
     }
 
     console.log(fields);
 
-    // Create the embed
     const embed = new EmbedBuilder()
     .setColor(0x2137ff)
     .setTitle("Players")
     .addFields(fields);
 
-    // Reply with the embed
     await interaction.reply({ embeds: [embed], ephemeral: true });
 });

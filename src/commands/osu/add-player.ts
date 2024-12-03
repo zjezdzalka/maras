@@ -14,12 +14,15 @@ export default new Command("add-player", "Adds player to the database", Applicat
   
     if (isNaN(parseInt(osu_id.toString()))) {
         interaction.reply("Please give a valid osu ID");
-    } else if (!name || typeof name !== 'string') {
+    } 
+    else if (!name || typeof name !== 'string') {
         interaction.reply("Please give a valid osu username");
-    } else {
+    } 
+    else {
         if (!tag) {
             interaction.reply("Invalid Discord tag information");
-        } else {
+        } 
+        else {
             const dsc_id = tag.username;
             const dsc_tag = tag.id;
             const query = sql`INSERT INTO players (id, osu_id, name, tag, dsc_tag) 

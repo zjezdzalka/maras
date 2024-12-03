@@ -10,12 +10,16 @@ export default new Command("remove-player", "Deletes player", ApplicationCommand
 ], async (interaction: ChatInputCommandInteraction<CacheType>) => {
     const delete_bool: boolean = interaction.options.data.find((e) => e.name === "del")?.value as boolean ?? false;
     const delete_num: number = parseInt(interaction.options.data.find((e) => e.name == "del_num")?.value!?.toString());
+    
     await interaction.deferReply();
+    
     if(delete_bool == true){
         const query = sql`DELETE FROM players;`;
         const query2 = sql`DELETE FROM SQLITE_SEQUENCE WHERE name='players';`;
+
         db.run(query);
         db.run(query2);
+        
         await interaction.editReply("Usunięto");
     }
     else{

@@ -19,11 +19,13 @@ export default new Command("change-score", "Changes the score of a match", Appli
                 .set({ score: score })
                 .where(eq(matches.id, match_id));
             interaction.reply("Score added to database!")
-        } else {
+        } 
+        else {
             interaction.reply("Invalid score format, please use '0:0'");
         }
     
-    }catch(e){
+    }
+    catch(e){
         console.log(e)
     }
 });

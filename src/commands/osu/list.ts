@@ -68,7 +68,6 @@ async function getResultQuery(stage: string) {
     return fields;
 }
 export default new Command("list", "Lists matches", ApplicationCommandOptionType.Subcommand, [], async (interaction: ChatInputCommandInteraction<CacheType>) => {
-    let i:number = 1;
     let fields = await getResultQuery("");
 
     console.log(fields);
@@ -121,48 +120,48 @@ export default new Command("list", "Lists matches", ApplicationCommandOptionType
 
         collector.on('collect', async (input) => {
             try{
-            if(input.values[0] == "RO16") {
-                fields = await getResultQuery("RO16");
-                input.update({
-                    content: fields.map(field => field.name).join('\n\n'),
-                    components: [buttons],
-                });
-            }
-            else if(input.values[0] == "QF") {
-                fields = await getResultQuery("QF");
-                input.update({
-                    content: fields.map(field => field.name).join('\n\n'),
-                    components: [buttons],
-                });
-            }
-            else if(input.values[0] == 'SF') {
-                fields = await getResultQuery("SF");
-                input.update({
-                    content: fields.map(field => field.name).join('\n\n'),
-                    components: [buttons],
-                });
-            }
-            else if(input.values[0] == 'F') {
-                fields = await getResultQuery("F");
-                input.update({
-                    content: fields.map(field => field.name).join('\n\n'),
-                    components: [buttons],
-                });
-            }
-            else if(input.values[0] == 'GF') {
-                fields = await getResultQuery("GF");
-                input.update({
-                    content: fields.map(field => field.name).join('\n\n'),
-                    components: [buttons],
-                });
-            }
-            else if(input.values[0] == 'wszystkie') {
-                fields = await getResultQuery("");
-                input.update({
-                    content: fields.map(field => field.name).join('\n\n'),
-                    components: [buttons],
-                });
-            }
+                if(input.values[0] == "RO16") {
+                    fields = await getResultQuery("RO16");
+                    input.update({
+                        content: fields.map(field => field.name).join('\n\n'),
+                        components: [buttons],
+                    });
+                }
+                else if(input.values[0] == "QF") {
+                    fields = await getResultQuery("QF");
+                    input.update({
+                        content: fields.map(field => field.name).join('\n\n'),
+                        components: [buttons],
+                    });
+                }
+                else if(input.values[0] == 'SF') {
+                    fields = await getResultQuery("SF");
+                    input.update({
+                        content: fields.map(field => field.name).join('\n\n'),
+                        components: [buttons],
+                    });
+                }
+                else if(input.values[0] == 'F') {
+                    fields = await getResultQuery("F");
+                    input.update({
+                        content: fields.map(field => field.name).join('\n\n'),
+                        components: [buttons],
+                    });
+                }
+                else if(input.values[0] == 'GF') {
+                    fields = await getResultQuery("GF");
+                    input.update({
+                        content: fields.map(field => field.name).join('\n\n'),
+                        components: [buttons],
+                    });
+                }
+                else if(input.values[0] == 'wszystkie') {
+                    fields = await getResultQuery("");
+                    input.update({
+                        content: fields.map(field => field.name).join('\n\n'),
+                        components: [buttons],
+                    });
+                }
             }
             catch(e) {console.log(e)}
         });
@@ -176,5 +175,4 @@ export default new Command("list", "Lists matches", ApplicationCommandOptionType
         console.log(e);
         await interaction.editReply({  content: fields.map(field => field.name).join('\n\n'), components: [] });
     }
-
 });

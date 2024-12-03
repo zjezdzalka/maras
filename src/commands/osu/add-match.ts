@@ -81,7 +81,7 @@ if (date.match(date_regex)) {
     const cronTime = `0 ${parsed.getMinutes()} ${parsed.getHours()} ${parsed.getDate()} ${parsed.getMonth() + 1} *`;
     const cronTime2 = `0 ${parsed_start.getMinutes()} ${parsed_start.getHours()} ${parsed_start.getDate()} ${parsed_start.getMonth() + 1} *`;
     const job = new CronJob(
-      cronTime, // cronTime
+      cronTime, 
       async function () {
         
         await new Promise(resolve => setTimeout(resolve, 4000));
@@ -95,14 +95,14 @@ if (date.match(date_regex)) {
 
         await interaction.editReply("Match reminder sent.");
         job.stop();
-      }, // onTick
-      null, // onComplete
-      true, // start
-      'Europe/Warsaw' // timeZone
+      },
+      null,
+      true, 
+      'Europe/Warsaw'
     );
     
     const job2 = new CronJob(
-      cronTime2, // cronTime
+      cronTime2, 
       async function () {
 
         await new Promise(resolve => setTimeout(resolve, 4000));
@@ -116,13 +116,14 @@ if (date.match(date_regex)) {
 
         await interaction.editReply("Match start sent.");
         job2.stop();
-      }, // onTick
-      null, // onComplete
-      true, // start
-      'Europe/Warsaw' // timeZone
+      },
+      null,
+      true,
+      'Europe/Warsaw'
     );
   }
-} else {
+} 
+else {
   interaction.reply("Invalid date format, please try again and use 'YYYY-MM-DD hh-mm'");
 }
 
