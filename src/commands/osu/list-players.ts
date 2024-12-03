@@ -3,28 +3,42 @@ import Command from "../command.js"
 import { db } from "../../utils/db.js";
 import { players } from "../../utils/schema.js";
 import { eq, sql } from "drizzle-orm";
-import player from "./player.js";
 
 
 export default new Command("list-players", "Lists players", ApplicationCommandOptionType.Subcommand, [], async (interaction: ChatInputCommandInteraction<CacheType>) => {
-    const match_query = await db.all(sql`select 
-        * from players;
-        `)
-    const fields: APIEmbedField[] =
-        match_query.map((e: any) => {
-            let date = new Date(e.date * 1000);
-            // uncomment if offset necessary
-            // const offset = date.getTimezoneOffset()
-            // date = new Date(date.getTime() - (offset * 60 * 1000))
-            return {
-                name: `${e.id}, ${e.name}`,
-                value: `osu_ID: ${e.osu_id}, Discord: ${e.tag}`
-            }
-        });
-    const embed = new EmbedBuilder()
-        .setColor(0x2137FF)
-        .setTitle("Players")
-        .addFields(fields)
+    const matchQuery: any[] = await db.all(
+        sql`
+          SELECT * FROM players;
+        `
+    ) || [];
 
-    interaction.reply({ embeds: [embed], ephemeral: true });
+    console.log(matchQuery);
+
+    // Map players to embed fields
+    const fields: APIEmbedField[] = matchQuery.map((player) => {
+        return {
+            name: `${player.id}, ${player.name}`,
+            value: `osu: ${player.osu_id}, discord: <@${player.dsc_tag}>`,
+            inline: false, // Optional: Ensures fields are displayed in separate rows
+        };
+    });
+
+    // Handle empty result set
+    if (fields.length === 0) {
+    fields.push({
+        name: "Na ten moment nie ma graczy.",
+        value: "wee woo wee woo",
+    });
+    }
+
+    console.log(fields);
+
+    // Create the embed
+    const embed = new EmbedBuilder()
+    .setColor(0x2137ff)
+    .setTitle("Players")
+    .addFields(fields);
+
+    // Reply with the embed
+    await interaction.reply({ embeds: [embed], ephemeral: true });
 });

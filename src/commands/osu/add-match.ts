@@ -5,7 +5,7 @@ import { db } from "../../utils/db.js";
 import { eq, sql } from "drizzle-orm";
 import { CronJob } from 'cron';
 
-export default new Command("add", "Adds match", ApplicationCommandOptionType.Subcommand, [
+export default new Command("add-match", "Adds match", ApplicationCommandOptionType.Subcommand, [
   new Option("player_one_id", "Osu ID of player one", true, ApplicationCommandOptionType.String),
   new Option("player_two_id", "Osu ID of player two", true, ApplicationCommandOptionType.String),
   new Option("desc", "What level is this match", true, ApplicationCommandOptionType.String),
@@ -18,12 +18,16 @@ export default new Command("add", "Adds match", ApplicationCommandOptionType.Sub
   const desc: string = interaction.options.data.find((e) => e.name === "desc")!?.value!.toString();
   // Matches YYYY-MM-DD hh:mm
   const date_regex = /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01]) (00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$/;
+  const desc_regex = /^RO16|QF|SF|F|GF$/;
 
 if (date.match(date_regex)) {
   let parsed: Date = new Date(parseDate(date).getTime() - 1*60000);
   let parsed_start: Date = new Date(parseDate(date));
   if (isNaN(parsed.getTime())) {
     interaction.reply("Invalid Date");
+  }
+  else if(!desc.match(desc_regex)){
+    interaction.reply("Podałeś zły stage meczu.");
   }
   else if(parsed.getTime()-60000 < Date.now()){
     interaction.reply("Date is in the past");
@@ -41,9 +45,6 @@ if (date.match(date_regex)) {
     await interaction.deferReply({ephemeral: true}); 
     
     await interaction.editReply("Match reminder set.");
-
-    // Insert the parsed date into the database
-    const formattedDate = `${date}:00`;
 
     const playerOneQuery = sql`SELECT dsc_tag FROM players WHERE id = ${player_one_id}`;
     const playerOneTag = db.get(playerOneQuery) as Array<{ dsc_tag: string }>;
@@ -70,7 +71,7 @@ if (date.match(date_regex)) {
     console.log(playerTwoResult);
 
     const query = sql`INSERT INTO matches (id, date, score, desc, playerone_id, playertwo_id) 
-                      VALUES (NULL, ${formattedDate}, '*score not added*', ${desc}, ${player_one_id}, ${player_two_id})`;
+                      VALUES (NULL, ${(parsed_start.getTime())/1000}, '*score not added*', ${desc}, ${player_one_id}, ${player_two_id})`;
     db.run(query);
 
     const idQuery = sql`SELECT id FROM matches ORDER BY id DESC LIMIT 1`;
@@ -82,11 +83,14 @@ if (date.match(date_regex)) {
     const job = new CronJob(
       cronTime, // cronTime
       async function () {
+        
+        await new Promise(resolve => setTimeout(resolve, 4000));
+
         const channelName = "ozskt4-reminders";
         const channel = interaction.guild?.channels.cache.find(channel => channel.name === channelName);
 
         if (channel?.isTextBased()) {
-          channel.send(`Mecz stopnia **${desc}** o numerze **${idQueryID}** - <@${playerOneResult}> vs. <@${playerTwoResult}> zaczyna się za **15** minut!`);
+          channel.send(`**${desc}** - match nr. **${idQueryID}** - <@${playerOneResult}> vs. <@${playerTwoResult}> zaczyna się za **15** minut!`);
         }
 
         await interaction.editReply("Match reminder sent.");
@@ -100,11 +104,14 @@ if (date.match(date_regex)) {
     const job2 = new CronJob(
       cronTime2, // cronTime
       async function () {
+
+        await new Promise(resolve => setTimeout(resolve, 4000));
+
         const channelName = "ozskt4-reminders";
         const channel = interaction.guild?.channels.cache.find(channel => channel.name === channelName);
 
         if (channel?.isTextBased()) {
-          channel.send(`Mecz stopnia **${desc}** o numerze **${idQueryID}** - <@${playerOneResult}> vs. <@${playerTwoResult}> zaczyna się teraz!`);
+          channel.send(`**${desc}** - match nr. **${idQueryID}** - <@${playerOneResult}> vs. <@${playerTwoResult}> zaczyna się teraz!`);
         }
 
         await interaction.editReply("Match start sent.");
