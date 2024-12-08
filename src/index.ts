@@ -42,7 +42,7 @@ async function setupCronJobs(client: Client){
   const elements =
     result.map((e: any) => {
     let date = new Date(e.date * 1000);
-    let earlyDate = new Date(e.date * 1000 - 1*60000);
+    let earlyDate = new Date(e.date * 1000 - 15*60000);
     // uncomment if offset necessary
     // const offset = date.getTimezoneOffset()
     // date = new Date(date.getTime() - (offset * 60 * 1000))
@@ -108,10 +108,10 @@ async function setupCronJobs(client: Client){
         }
 
         job2.stop();
-      }, // onTick
-      null, // onComplete
-      true, // start
-      'Europe/Warsaw' // timeZone
+      },
+      null,
+      true,
+      'Europe/Warsaw'
     );
 
     console.log("finished match ID: ", e.id);

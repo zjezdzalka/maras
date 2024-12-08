@@ -21,7 +21,7 @@ export default new Command("add-match", "Adds match", ApplicationCommandOptionTy
   const desc_regex = /^RO16|QF|SF|F|GF$/;
 
 if (date.match(date_regex)) {
-  let parsed: Date = new Date(parseDate(date).getTime() - 1*60000);
+  let parsed: Date = new Date(parseDate(date).getTime() - 15*60000);
   let parsed_start: Date = new Date(parseDate(date));
   if (isNaN(parsed.getTime())) {
     interaction.reply("Invalid Date");
@@ -29,7 +29,7 @@ if (date.match(date_regex)) {
   else if(!desc.match(desc_regex)){
     interaction.reply("Podałeś zły stage meczu.");
   }
-  else if(parsed.getTime()-60000 < Date.now()){
+  else if(parsed.getTime() < Date.now()){
     interaction.reply("Date is in the past");
   }
   else if(player_one_id === player_two_id){

@@ -41,7 +41,7 @@ async function getResultQuery(stage: string) {
 
             name += `.${date.getFullYear()}`;
             let score = e.score;
-            let value = `${name}, <t:${(Number(date))/1000}:R>\n`; // minus 1 month bc it is 1 month ahead
+            let value = `${name}, <t:${(Number(date))-(60*60*1000)/1000}:R>\n`; // minus 1 month bc it is 1 month ahead
             if(score != "*score not added*"){
                 score.split(':');
                 if(score[0] > score[2]){
@@ -67,7 +67,7 @@ async function getResultQuery(stage: string) {
     }
     return fields;
 }
-export default new Command("list", "Lists matches", ApplicationCommandOptionType.Subcommand, [], async (interaction: ChatInputCommandInteraction<CacheType>) => {
+export default new Command("list-matches", "Lists matches", ApplicationCommandOptionType.Subcommand, [], async (interaction: ChatInputCommandInteraction<CacheType>) => {
     let fields = await getResultQuery("");
 
     console.log(fields);
